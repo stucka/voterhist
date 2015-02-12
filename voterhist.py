@@ -9,12 +9,16 @@ import zipfile
 import os
 import creds
 
-## AWWWW. They changed the file naming scheme somewhere along the lines, and maybe the schema too.
-## Filename schema has changed, to VOTER_HISTORY_YYYY.TXT. Account for both.
-## File schema itself has changed
-## Purge old ZIP files?
-## Purge old text files?
-## Purge old bighistory.txt file?
+## Note "import creds" refers to MySQL credentials to be entered in creds.py
+## chmod creds.py 700 for more security on Unix machines.
+
+## The Georgia Secretary of State's office has monkeyed with the files but not
+## documented what is going on. Filename schema were changed from 2013 on.
+## Date formats were changed from 2014 on.
+## Other changes, like how election types are reported, are not documented.
+## The office has not responded to multiple requests for documentation.
+
+## This keeps old ZIP files, but purges text files including large parsed file.
 
 hostdir=creds.access['hostdir']
 dbhost=creds.access['dbhost']
@@ -116,7 +120,7 @@ def UnzipHistory():
     return
 
 def ParseHistory():
-    print "Beginning to parse history fils ..."
+    print "Beginning to parse history files ..."
     bigfilehandle = open('bighistory.txt', 'wb')
     big = csv.writer(bigfilehandle, delimiter = '\t' )
     for MyYear in MyYears:
@@ -147,6 +151,8 @@ def ParseHistory():
                                          absentee, electionyear])
 
             source.close()
+            print "    Deleting file " + mysourcefile
+            os.remove(mysourcefile)   # Delete annual text file
 
     bigfilehandle.close()
     return
@@ -157,7 +163,7 @@ def ImportHistory():
     db.execute("""set autocommit=0;""")
     db.execute("""alter table voterhist disable keys;""")
     for MyYear in MyYears:
-        print "    Deleting history, if any, from year " + str(MyYear)
+        print "    Deleting database records, if any, for year " + str(MyYear)
         db.execute('delete from voterhist where ElectionYear=%s', str(MyYear))
     print "Beginning to import the big file."
     db.execute("""LOAD DATA LOCAL INFILE 'bighistory.txt' into table voterhist fields terminated by "\t";""")
@@ -167,6 +173,8 @@ def ImportHistory():
     db.execute("""commit;""")
     db.execute("""alter table voterhist enable keys;""")
     db.execute("""set autocommit=1;""")
+    print "    Deleting parsed history file bighistory.txt"
+    os.remove("bighistory.txt")   # Delete annual text file
     print "Wow. I think we might be done."
     return
 

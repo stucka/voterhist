@@ -174,8 +174,8 @@ def ImportHistory():
     db.execute("""commit;""")
     db.execute("""alter table voterhist enable keys;""")
     db.execute("""set autocommit=1;""")
-    print "    Deleting parsed history file bighistory.txt"
     bigfilename=hostdir + "/bighistory.txt"
+    print "    Deleting parsed history file " + bigfilename
     os.remove(bigfilename)   # Delete annual text file
     print "Wow. I think we might be done."
     return

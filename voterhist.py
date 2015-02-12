@@ -121,7 +121,8 @@ def UnzipHistory():
 
 def ParseHistory():
     print "Beginning to parse history files ..."
-    bigfilehandle = open('bighistory.txt', 'wb')
+    bigfilename=hostdir + "/bighistory.txt"
+    bigfilehandle = open(bigfilename, 'wb')
     big = csv.writer(bigfilehandle, delimiter = '\t' )
     for MyYear in MyYears:
         if MyYear >= 2013:
@@ -174,7 +175,7 @@ def ImportHistory():
     db.execute("""alter table voterhist enable keys;""")
     db.execute("""set autocommit=1;""")
     print "    Deleting parsed history file bighistory.txt"
-    os.remove("bighistory.txt")   # Delete annual text file
+    os.remove(bigfilename)   # Delete annual text file
     print "Wow. I think we might be done."
     return
 

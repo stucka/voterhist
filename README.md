@@ -1,7 +1,14 @@
-## What is this I don't even
+# What is this I don't even
 
 This Python script is to ingest the Georgia Secretary of State's
 voter history records into a large (~60 million row) MySQL database.
+
+Combined with the actual voter database and matching on the registration 
+number, you can look up voter participation.
+
+[This can help you learn interesting 
+things](http://www.macon.com/2013/09/13/2662380_few-signs-of-moderation-in-candidates.html?rh=1)
+
 
 ### Installation
 
@@ -26,7 +33,7 @@ drop the voterhist table through MySQL, and it will start fresh.
 If you corrupt anything, drop the voterhist table through MySQL and it 
 will start fresh.
 
-=== Cleanup
+### Cleanup
 
 This thing is set to download ZIPs with each year's records in a text 
 file; process those annual text files and parse them into a single large 

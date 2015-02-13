@@ -6,8 +6,8 @@ voter history records into a large (~60 million row) MySQL database.
 Combined with the actual voter database and matching on the registration 
 number, you can look up voter participation.
 
-[This can help you learn interesting 
-things](http://www.macon.com/2013/09/13/2662380_few-signs-of-moderation-in-candidates.html?rh=1)
+[This data can help you learn interesting 
+things.](http://www.macon.com/2013/09/13/2662380_few-signs-of-moderation-in-candidates.html?rh=1)
 
 
 ### Installation

@@ -119,8 +119,8 @@ Import routine:
     truncate table voters;
 
     LOAD DATA LOCAL INFILE 'DelimV2.txt' INTO TABLE voters FIELDS 
-TERMINATED BY '|' enclosed by '"' LINES TERMINATED by "\r\n" ignore 1 
-lines;
+    TERMINATED BY '|' enclosed by '"' LINES TERMINATED by "\r\n" ignore 1 
+    lines;
 
     commit;
 
@@ -148,13 +148,13 @@ lines;
 
 Customize as you will. "voterslocal" would be a better name; your mileage may vary. Find county codes in the FIPS table you built off the GIST from the above URL.
 
-   drop table if exists votersmidga;
+    drop table if exists votersmidga;
 
-   create table votersmidga AS select * from voters where countycode IN 
-("005", "011", "012", "039", "076", "084", "087", "102", "111", "143", 
-"158");
+    create table votersmidga AS select * from voters where countycode IN 
+    ("005", "011", "012", "039", "076", "084", "087", "102", "111", "143", 
+    "158");
 
     alter table votersmidga add index (countycode), add index 
-(ResidenceStreetName), add index (LastName, FirstName), add column 
-County varchar(50) first;
+    (ResidenceStreetName), add index (LastName, FirstName), add column 
+    County varchar(50) first;
 
